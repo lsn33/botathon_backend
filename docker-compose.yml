@@ -1,0 +1,19 @@
+# SQL Server local para desarrollo. NO usar para produccion.
+# Levantar:  docker compose up -d
+# Detener:   docker compose down        (los datos se conservan en el volumen)
+# Borrar todo: docker compose down -v
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlplan
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-Planif#Dev2026}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlplan-data:/var/opt/mssql
+    restart: unless-stopped
+
+volumes:
+  sqlplan-data:
